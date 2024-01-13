@@ -5,35 +5,20 @@ const PreIdenticalArrDelFunction = () => {
         [{ id: 1, name: "Arshman" }],
         [{ id: 2, name: "ali" }],
         [{ id: 2, name: "Shuja" }],
+        [{ id: 2, name: "Ali" }],
         [{ id: 4, name: "hassan" }],
 
     ]);
-    const [fetchedItems, setFetchedItem] = useState([])
+    const [getFilter, setGetFilter] = useState([])
     const handleCheckFunction = (id) => {
         const fetchSame = data.map((item) => {
-            const filteredItems = item.filter((dataItem) => dataItem.id === id);
-
-            if (filteredItems.length > 0) {
-                const areAllNamesSame = filteredItems.every(
-                    (dataItem) => dataItem.name === filteredItems[0].name
-                );
-
-                if (areAllNamesSame) {
-                    return filteredItems.map((matchingItem) => matchingItem.name[matchingItem.name.length - 1]);
-                }
-            }
-
-            return null; // or any default value if the names are not the same
-        });
-        console.log(fetchSame);
-        // const fetchSame = data.map((item) => {
-        //     return item
-        //         .filter((dataItem) => dataItem.id === id)
-        //         .map((matchingItem) => matchingItem.name);
-        // })
-        // setFetchedItem(fetchSame);
-        // console.log(fetchedItems)
-
+            return item
+                .filter((dataItem) => dataItem.id === id)
+        })
+        const getFiltered = fetchSame
+            .filter((item) => item.length > 0)
+        const lastElement = getFiltered[getFiltered.length - 1];
+        setGetFilter(lastElement)
     }
 
     return (
@@ -41,6 +26,7 @@ const PreIdenticalArrDelFunction = () => {
             <div>
                 <table>
                     <thead>
+                        <th>id</th>
                         <th>name</th>
                     </thead>
                     <tbody>
@@ -59,15 +45,23 @@ const PreIdenticalArrDelFunction = () => {
                         ))}
                     </tbody>
                 </table>
+                <table>
+                    <thead>
+                        <th>Filtered name</th>
+                    </thead>
+                    <tbody>
+                        {getFilter.map((item) => {
+                            return (
+                                <tr>
+                                    <td>{item.name}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
             </div>
         </>
     )
 }
-{/* // item.map((dataItem, id) => (
-//     <tr key={id}>
-//         <td>{dataItem.id}</td>
-//         <td>{dataItem.name}</td>
-//     </tr>
-// )) */}
 
 export default PreIdenticalArrDelFunction
